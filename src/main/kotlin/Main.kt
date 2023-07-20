@@ -1,8 +1,8 @@
+
 import LevelFourCalculator.LevelFourCalculatorImpl
 import LevelThreeCalculator.LevelThreeCalculator
 import java.io.BufferedReader
 import java.io.InputStreamReader
-import java.math.BigDecimal
 import java.util.*
 import kotlin.math.pow
 import kotlin.math.round
@@ -132,7 +132,6 @@ fun printAddResult(aNumber: Double, bNumber: Double, totalLength: Int) {
         println("더하기 결과: $addResult")
     }
     println("---------------------------------------")
-    BigDecimal.ZERO
 }
 
 fun printSubtractResult(aNumber: Double, bNumber: Double, totalLength: Int) {
