@@ -1,512 +1,201 @@
+import LevelFourCalculator.LevelFourCalculatorImpl
+import LevelThreeCalculator.LevelThreeCalculator
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.math.BigDecimal
 import java.util.*
+import kotlin.math.pow
+import kotlin.math.round
 
-val sc = Scanner(System.`in`)
+val sc = BufferedReader(InputStreamReader(System.`in`))
 
+var run = true
 
 fun main() {
     while (true) {
-        println("계산기 번호를 입력해주세요 1: 레벨 1 계산기, 2: 레벨 2 계산기 3: 레벨 3 계산기 4: 레벨 4 계산기 5: 계산기 종료")
-        print("계산기 번호: ")
-        when (sc.nextInt()) {
-            1 -> {
-                println("---------------------------------------")
-                println("Level 1 계산기를 선택하셨군요")
-                println("---------------------------------------")
-                LevelOneCalculator().levelOneCalculator()
-            }
+        try {
+            println("계산기 번호를 입력해주세요 1: 레벨 1 계산기, 2: 레벨 2 계산기 3: 레벨 3 계산기 4: 레벨 4 계산기 5: 식 계산기 0: 계산기 종료")
+            print("계산기 번호: ")
 
-            2 -> {
-                println("---------------------------------------")
-                println("Level 2 계산기를 선택하셨군요")
-                println("---------------------------------------")
-                LevelTwoCalculator().levelTwoCalculator()
-            }
-
-            3 -> {
-                println("---------------------------------------")
-                println("Level 3 계산기를 선택하셨군요")
-                println("---------------------------------------")
-                LevelThreeCalculator().levelThreeCalculator()
-            }
-
-            4 -> {
-                println("---------------------------------------")
-                println("Level 4 계산기를 선택하셨군요")
-                println("---------------------------------------")
-                val levelFourCalculator = LevelFourCalculatorImpl()
-                levelFourCalculator.operate()
-
-            }
-
-            5 -> {
-                println("---------------------------------------")
-                println("계산기 프로그램을 종료합니다.")
-                println("---------------------------------------")
-                return
-            }
-
-        }
-    }
-
-}
-
-
-class LevelOneCalculator {
-    fun levelOneCalculator() {
-        while (true) {
-            try {
-                println("연산자(+,-,*,/ 중 택1)를 입력하시고 엔터 키를 눌러주세요(엔터키를 입력하셔야 연산자가 입력됩니다.) \n잘못된 연산자 입력시 계산이 되지 않습니다.")
-                println("---------------------------------------")
-                println("만약 종료를 하고 싶으시면 @을 입력해주세요")
-                val operator = sc.next().toCharArray()[0]
-                println("---------------------------------------")
-                if (operator == '@') {
-                    println("레벨 1 계산기가 종료되었습니다.")
+            when (sc.readLine()[0]) {
+                '1' -> {
                     println("---------------------------------------")
+                    println("Level 1 계산기를 선택하셨군요")
+                    println("---------------------------------------")
+                    LevelOneCalculator().levelOneCalculator()
+                }
+
+                '2' -> {
+                    println("---------------------------------------")
+                    println("Level 2 계산기를 선택하셨군요")
+                    println("---------------------------------------")
+                    LevelTwoCalculator().levelTwoCalculator()
+                }
+
+                '3' -> {
+                    println("---------------------------------------")
+                    println("Level 3 계산기를 선택하셨군요")
+                    println("---------------------------------------")
+                    LevelThreeCalculator().levelThreeCalculator()
+                }
+
+                '4' -> {
+                    println("---------------------------------------")
+                    println("Level 4 계산기를 선택하셨군요")
+                    println("---------------------------------------")
+                    val levelFourCalculator = LevelFourCalculatorImpl()
+                    levelFourCalculator.operate()
+
+                }
+
+                '5' -> {
+                    println("---------------------------------------")
+                    println("식 계산기를 선택하셨군요")
+                    println("---------------------------------------")
+                    ExpressionCalculator().expression()
+
+                }
+
+                '0' -> {
+                    println("---------------------------------------")
+                    println("계산기 프로그램을 종료합니다.")
+                    println("---------------------------------------")
+                    sc.close()
                     return
-                } else if (operator != '+' && operator != '-' && operator != '*' && operator != '/' && operator != '%') {
-                    println("잘못된 연산자 입니다.")
-                    println("잘못된 연산자가 입력 됐으므로 계산기를 종료합니다. ")
+                }
+
+                else -> {
                     println("---------------------------------------")
-                    break
-                }
-                println("처음 숫자를 입력하시고 엔터 키를 눌러주세요(엔터키를 입력하셔야 숫자가 입력됩니다)")
-                val a = sc.nextInt() //입력값을 받는 메서드
-                println("---------------------------------------")
-                println("다음 숫자를 입력하시고 엔터 키를 눌러주세요(엔터키를 입력하셔야 숫자가 입력됩니다)")
-                val b = sc.nextInt()
-                println("---------------------------------------")
-                when (operator) {
-                    '+' -> {
-                        println("더하기 결과: " + (a + b))
-                        println("---------------------------------------")
-                    }
-
-                    '-' -> {
-                        println("빼기 결과: " + (a - b))
-                        println("---------------------------------------")
-                    }
-
-                    '*' -> {
-                        println("곱하기 결과: " + (a * b))
-                        println("---------------------------------------")
-                    }
-
-                    '/' -> {
-                        println("나누기 결과: " + (a / b))
-                        println("---------------------------------------")
-                    }
-
-                    else -> {
-                        println("연산자가 올바르지 않습니다.")
-                        println("---------------------------------------")
-                    }
-                }
-                while (true) {
-                    print("계속 하시겠습니까? (y/n) : ")
-                    val yn = sc.next().toCharArray()[0]
+                    println("잘못된 번호를 입력하셨습니다.")
                     println("---------------------------------------")
-                    if (yn == 'y') {
-                        println("계산기를 계속합니다.")
-                        println("---------------------------------------")
-                        break
-                    } else if (yn == 'n') {
-                        println("레벨 1 계산기를 종료합니다.")
-                        println("---------------------------------------")
-                        return
-                    } else {
-                        println("잘못된 입력입니다. 다시 입력해주세요")
-                        println("---------------------------------------")
-                        continue
-                    }
                 }
-            } catch (e: Exception) {
-                println("숫자를 입력해주여야 합니다.")
-                println("입력 값이 잘못 되었으므로 계산기를 다시 실행합니다.")
-                println("---------------------------------------")
-                sc.nextLine()
+
             }
+        } catch (e: InputMismatchException) {
+            println("---------------------------------------")
+            println("숫자를 입력해주세요")
+            println("---------------------------------------")
+            sc.readLine()
         }
 
     }
 }
 
-class LevelTwoCalculator {
-    fun levelTwoCalculator() {
-        while (true) {
-            try {
-                println("연산자(+,-,*,/,% 중 택1)를 입력하시고 엔터 키를 눌러주세요(엔터키를 입력하셔야 연산자가 입력됩니다.) \n잘못된 연산자 입력시 계산이 되지 않습니다.")
+
+fun decimalLength(num: String?): Int { //Double 타입의 num을 받는다.
+    if (num != null && num.contains('.')) { //String 타입의 num에 '.'이 포함되어 있다면
+        return num.split('.')[1].length //소수점 이하의 자릿수를 반환한다.
+    }
+    return 0
+}
+
+fun numberAndLength(): Triple<Double, Double, Int> {
+    try {
+        println("처음 숫자를 입력하시고 엔터 키를 눌러주세요(엔터키를 입력하셔야 숫자가 입력됩니다)")
+        val aInput = sc.readLine()
+        val aNumber = aInput.toDouble()
+        println("---------------------------------------")
+        println("다음 숫자를 입력하시고 엔터 키를 눌러주세요(엔터키를 입력하셔야 숫자가 입력됩니다)")
+        val bInput = sc.readLine()
+        val bNumber = bInput.toDouble()
+        val length1 = decimalLength(aInput)
+        val length2 = decimalLength(bInput)
+        val totalLength = length1 + length2 //전체 자리수 구하기
+        return Triple(aNumber, bNumber, totalLength)
+    } catch (e: NumberFormatException) {
+        println("---------------------------------------")
+        println("다시 입력해주세요")
+        println("---------------------------------------")
+        return numberAndLength()
+    }
+}
+
+
+fun operand(): Char {
+    println("연산자(+,-,*,/,% 중 택1)를 입력하시고 엔터 키를 눌러주세요(엔터키를 입력하셔야 연산자가 입력됩니다.) ")
+    println("---------------------------------------")
+    println("잘못된 연산자 입력시 계산이 되지 않습니다.")
+    println("---------------------------------------")
+    println("만약 종료를 하고 싶으시면 @을 입력해주세요")
+    println("---------------------------------------")
+    val operator = sc.readLine()[0]
+    println("---------------------------------------")
+    return operator
+}
+
+fun printAddResult(aNumber: Double, bNumber: Double, totalLength: Int) {
+    val addResult =
+        round((aNumber + bNumber) * 10.0.pow(totalLength.toDouble())) / 10.0.pow(totalLength.toDouble())
+    if (addResult % 1 == 0.0) {
+        println("계산 결과: ${addResult.toInt()}")
+    } else {
+        println("더하기 결과: $addResult")
+    }
+    println("---------------------------------------")
+    BigDecimal.ZERO
+}
+
+fun printSubtractResult(aNumber: Double, bNumber: Double, totalLength: Int) {
+    val subtractResult =
+        round((aNumber - bNumber) * 10.0.pow(totalLength.toDouble())) / 10.0.pow(totalLength.toDouble())
+    if (subtractResult % 1 == 0.0) {
+        println("계산 결과: ${subtractResult.toInt()}")
+    } else {
+        println("빼기 결과: $subtractResult")
+    }
+    println("---------------------------------------")
+}
+
+fun printMultiplyResult(aNumber: Double, bNumber: Double, totalLength: Int) {
+    val multiplyResult = round(aNumber * bNumber * 10.0.pow(totalLength.toDouble())) / 10.0.pow(totalLength.toDouble())
+    if (multiplyResult % 1 == 0.0) {
+        println("계산 결과: ${multiplyResult.toInt()}")
+    } else {
+        println("곱하기 결과: $multiplyResult")
+    }
+    println("---------------------------------------")
+}
+
+fun printDivideResult(aNumber: Double, bNumber: Double, totalLength: Int) {
+    val divideResult = round(aNumber / bNumber * 10.0.pow((totalLength).toDouble())) / 10.0.pow((totalLength).toDouble())
+    if (divideResult % 1 == 0.0) {
+        println("계산 결과: ${divideResult.toInt()}")
+    } else {
+        println("나누기 결과: $divideResult")
+    }
+    println("---------------------------------------")
+}
+
+fun printModulusResult(aNumber: Double, bNumber: Double) {
+
+    println("나머지 결과: " + (aNumber % bNumber).toInt())
+    println("---------------------------------------")
+}
+
+fun continueCondition(): Boolean {
+    while (true) {
+        print("계속 하시겠습니까? (y/n) : ")
+        val yn = sc.readLine()[0]
+        println("---------------------------------------")
+        when (yn) {
+            'y' -> {
+                println("계산기를 계속합니다.")
                 println("---------------------------------------")
-                println("만약 종료를 하고 싶으시면 @을 입력해주세요")
-                val operator = sc.next().toCharArray()[0]
+                break
+            }
+
+            'n' -> {
+                println("계산기를 종료합니다.")
                 println("---------------------------------------")
-                if (operator == '@') {
-                    println("레벨 2 계산기가 종료되었습니다.")
-                    println("---------------------------------------")
-                    return
-                } else if (operator != '+' && operator != '-' && operator != '*' && operator != '/' && operator != '%') {
-                    println("잘못된 연산자 입니다.")
-                    println("잘못된 연산자가 입력 됐으므로 계산기를 종료합니다. ")
-                    println("---------------------------------------")
-                    break
-                }
-                println("처음 숫자를 입력하시고 엔터 키를 눌러주세요(엔터키를 입력하셔야 숫자가 입력됩니다)")
-                val a = sc.nextInt() //입력값을 받는 메서드
+                return true
+            }
+
+            else -> {
+                println("잘못된 입력입니다. 다시 입력해주세요")
                 println("---------------------------------------")
-                println("다음 숫자를 입력하시고 엔터 키를 눌러주세요(엔터키를 입력하셔야 숫자가 입력됩니다)")
-                val b = sc.nextInt()
-                println("---------------------------------------")
-                when (operator) {
-                    '+' -> {
-                        println("더하기 결과: " + (a + b))
-                        println("---------------------------------------")
-                    }
-
-                    '-' -> {
-                        println("빼기 결과: " + (a - b))
-                        println("---------------------------------------")
-                    }
-
-                    '*' -> {
-                        println("곱하기 결과: " + (a * b))
-                        println("---------------------------------------")
-                    }
-
-                    '/' -> {
-                        println("나누기 결과: " + (a / b))
-                        println("---------------------------------------")
-                    }
-
-                    '%' -> {
-                        println("나머지 결과: " + (a % b))
-                        println("---------------------------------------")
-                    }
-
-                    else -> {
-                        println("연산자가 올바르지 않습니다.")
-                        println("---------------------------------------")
-                    }
-                }
-                while (true) {
-                    print("계속 하시겠습니까? (y/n) : ")
-                    val yn = sc.next().toCharArray()[0]
-                    println("---------------------------------------")
-                    when (yn) {
-                        'y' -> {
-                            println("계산기를 계속합니다.")
-                            println("---------------------------------------")
-                            break
-                        }
-
-                        'n' -> {
-                            println("레벌 2 계산기를 종료합니다.")
-                            println("---------------------------------------")
-                            return
-                        }
-
-                        else -> {
-                            println("잘못된 입력입니다. 다시 입력해주세요")
-                            println("---------------------------------------")
-                            continue
-                        }
-                    }
-                }
-            } catch (e: Exception) {
-                println("숫자를 입력해주여야 합니다.")
-                println("입력 값이 잘못 되었으므로 계산기를 다시 실행합니다.")
-                println("---------------------------------------")
-                sc.nextLine()
+                continue
             }
         }
     }
-}
-
-class LevelThreeCalculator {
-    fun levelThreeCalculator() {
-        while (true) {
-            try {
-                println("연산자(+,-,*,/,% 중 택1)를 입력하시고 엔터 키를 눌러주세요(엔터키를 입력하셔야 연산자가 입력됩니다.) \n잘못된 연산자 입력시 계산이 되지 않습니다.")
-                println("---------------------------------------")
-                println("만약 종료를 하고 싶으시면 @을 입력해주세요")
-                val operator = sc.next().toCharArray()[0]
-                if (operator == '@') {
-                    println("레벨 3 계산기가 종료되었습니다.")
-                    println("---------------------------------------")
-                    return
-                } else if (operator != '+' && operator != '-' && operator != '*' && operator != '/' && operator != '%') {
-                    println("잘못된 연산자 입니다.")
-                    println("잘못된 연산자가 입력 됐으므로 계산기를 종료합니다. ")
-                    println("---------------------------------------")
-                    break
-                }
-                when (operator) {
-                    '+' -> {
-                        AddOperation().addOperation()
-                    }
-
-                    '-' -> {
-                        SubtractOperation().subtractOperation()
-                    }
-
-                    '*' -> {
-                        MultiplyOperation().multiplyOperation()
-                    }
-
-                    '/' -> {
-                        DivideOperation().divideOperation()
-                    }
-
-                    '%' -> {
-                        ModulusOperation().modulusOperation()
-                    }
-
-                    else -> {
-                        println("연산자가 올바르지 않습니다.")
-                        println("---------------------------------------")
-                    }
-
-                }
-                while (true) {
-                    print("계속 하시겠습니까? (y/n) : ")
-                    val yn = sc.next().toCharArray()[0]
-                    println("---------------------------------------")
-                    when (yn) {
-                        'y' -> {
-                            println("계산기를 계속합니다.")
-                            println("---------------------------------------")
-                            break
-                        }
-
-                        'n' -> {
-                            println("레벨 3 계산기를 종료합니다.")
-                            println("---------------------------------------")
-                            return
-                        }
-
-                        else -> {
-                            println("잘못된 입력입니다. 다시 입력해주세요")
-                            println("---------------------------------------")
-                            continue
-                        }
-                    }
-                }
-            } catch (e: Exception) {
-                println("숫자를 입력해주여야 합니다.")
-                println("입력 값이 잘못 되었으므로 계산기를 다시 실행합니다.")
-                println("---------------------------------------")
-                sc.nextLine()
-            }
-        }
-    }
-
-    class AddOperation {
-        fun addOperation() {
-            println("처음 숫자를 입력하시고 엔터 키를 눌러주세요(엔터키를 입력하셔야 숫자가 입력됩니다)")
-            val a = sc.nextInt()
-            println("---------------------------------------")
-            println("다음 숫자를 입력하시고 엔터 키를 눌러주세요(엔터키를 입력하셔야 숫자가 입력됩니다)")
-            val b = sc.nextInt()
-            println("---------------------------------------")
-            println("더하기 결과: " + (a + b))
-            println("---------------------------------------")
-        }
-    }
-
-    class SubtractOperation {
-        fun subtractOperation() {
-            println("처음 숫자를 입력하시고 엔터 키를 눌러주세요(엔터키를 입력하셔야 숫자가 입력됩니다)")
-            val a = sc.nextInt()
-            println("---------------------------------------")
-            println("다음 숫자를 입력하시고 엔터 키를 눌러주세요(엔터키를 입력하셔야 숫자가 입력됩니다)")
-            val b = sc.nextInt()
-            println("---------------------------------------")
-            println("빼기 결과: " + (a - b))
-            println("---------------------------------------")
-        }
-
-    }
-
-    class MultiplyOperation {
-        fun multiplyOperation() {
-            println("처음 숫자를 입력하시고 엔터 키를 눌러주세요(엔터키를 입력하셔야 숫자가 입력됩니다)")
-            val a = sc.nextInt()
-            println("---------------------------------------")
-            println("다음 숫자를 입력하시고 엔터 키를 눌러주세요(엔터키를 입력하셔야 숫자가 입력됩니다)")
-            val b = sc.nextInt()
-            println("---------------------------------------")
-            println("곱하기 결과: " + (a * b))
-            println("---------------------------------------")
-        }
-    }
-
-    class DivideOperation {
-        fun divideOperation() {
-            println("처음 숫자를 입력하시고 엔터 키를 눌러주세요(엔터키를 입력하셔야 숫자가 입력됩니다)")
-            val a = sc.nextInt()
-            println("---------------------------------------")
-            println("다음 숫자를 입력하시고 엔터 키를 눌러주세요(엔터키를 입력하셔야 숫자가 입력됩니다)")
-            val b = sc.nextInt()
-            println("---------------------------------------")
-            println("나누기 결과: " + (a / b))
-            println("---------------------------------------")
-        }
-    }
-
-    class ModulusOperation {
-        fun modulusOperation() {
-            println("처음 숫자를 입력하시고 엔터 키를 눌러주세요(엔터키를 입력하셔야 숫자가 입력됩니다)")
-            val a = sc.nextInt()
-            println("---------------------------------------")
-            println("다음 숫자를 입력하시고 엔터 키를 눌러주세요(엔터키를 입력하셔야 숫자가 입력됩니다)")
-            val b = sc.nextInt()
-            println("---------------------------------------")
-            println("나머지 결과: " + (a % b))
-            println("---------------------------------------")
-        }
-    }
-}
-
-
-abstract class LevelFourCalculator {
-    abstract fun operate()
-
-}
-
-class AddOperation : LevelFourCalculator() {
-    override fun operate() {
-        println("처음 숫자를 입력하시고 엔터 키를 눌러주세요(엔터키를 입력하셔야 숫자가 입력됩니다)")
-        val a = sc.nextInt()
-        println("---------------------------------------")
-        println("다음 숫자를 입력하시고 엔터 키를 눌러주세요(엔터키를 입력하셔야 숫자가 입력됩니다)")
-        val b = sc.nextInt()
-        println("---------------------------------------")
-        println("더하기 결과: " + (a + b))
-        println("---------------------------------------")
-    }
-}
-
-class SubtractOperation : LevelFourCalculator() {
-    override fun operate() {
-        println("처음 숫자를 입력하시고 엔터 키를 눌러주세요(엔터키를 입력하셔야 숫자가 입력됩니다)")
-        val a = sc.nextInt()
-        println("---------------------------------------")
-        println("다음 숫자를 입력하시고 엔터 키를 눌러주세요(엔터키를 입력하셔야 숫자가 입력됩니다)")
-        val b = sc.nextInt()
-        println("---------------------------------------")
-        println("빼기 결과: " + (a - b))
-        println("---------------------------------------")
-    }
-}
-
-class MultiplyOperation : LevelFourCalculator() {
-    override fun operate() {
-        println("처음 숫자를 입력하시고 엔터 키를 눌러주세요(엔터키를 입력하셔야 숫자가 입력됩니다)")
-        val a = sc.nextInt()
-        println("---------------------------------------")
-        println("다음 숫자를 입력하시고 엔터 키를 눌러주세요(엔터키를 입력하셔야 숫자가 입력됩니다)")
-        val b = sc.nextInt()
-        println("---------------------------------------")
-        println("곱하기 결과: " + (a * b))
-        println("---------------------------------------")
-    }
-}
-
-class DivideOperation : LevelFourCalculator() {
-    override fun operate() {
-        println("처음 숫자를 입력하시고 엔터 키를 눌러주세요(엔터키를 입력하셔야 숫자가 입력됩니다)")
-        val a = sc.nextInt()
-        println("---------------------------------------")
-        println("다음 숫자를 입력하시고 엔터 키를 눌러주세요(엔터키를 입력하셔야 숫자가 입력됩니다)")
-        val b = sc.nextInt()
-        println("---------------------------------------")
-        println("나누기 결과: " + (a / b))
-        println("---------------------------------------")
-    }
-}
-
-class ModOperation : LevelFourCalculator() {
-    override fun operate() {
-        println("처음 숫자를 입력하시고 엔터 키를 눌러주세요(엔터키를 입력하셔야 숫자가 입력됩니다)")
-        val a = sc.nextInt()
-        println("---------------------------------------")
-        println("다음 숫자를 입력하시고 엔터 키를 눌러주세요(엔터키를 입력하셔야 숫자가 입력됩니다)")
-        val b = sc.nextInt()
-        println("---------------------------------------")
-        println("나머지 결과: " + (a % b))
-        println("---------------------------------------")
-    }
-}
-
-class LevelFourCalculatorImpl : LevelFourCalculator() {
-    override fun operate() {
-        while (true) {
-            try {
-                println("연산자(+,-,*,/,% 중 택1)를 입력하시고 엔터 키를 눌러주세요(엔터키를 입력하셔야 연산자가 입력됩니다.) \n잘못된 연산자 입력시 계산이 되지  않습니다.")
-                println("---------------------------------------")
-                println("만약 종료를 하고 싶으시면 @을 입력해주세요")
-                println("---------------------------------------")
-                val operator = sc.next().toCharArray()[0]
-                if (operator == '@') {
-                    println("레벨 4 계산기가 종료되었습니다.")
-                    println("---------------------------------------")
-                    break
-                } else if (operator != '+' && operator != '-' && operator != '*' && operator != '/' && operator != '%') {
-                    println("잘못된 연산자 입니다.")
-                    println("잘못된 연산자가 입력 됐으므로 계산기를 종료합니다. ")
-                    println("---------------------------------------")
-                    break
-                }
-                when (operator) {
-                    '+' -> {
-                        AddOperation().operate()
-                    }
-
-                    '-' -> {
-                        SubtractOperation().operate()
-                    }
-
-                    '*' -> {
-                        MultiplyOperation().operate()
-                    }
-
-                    '/' -> {
-                        DivideOperation().operate()
-                    }
-
-                    '%' -> {
-                        ModOperation().operate()
-                    }
-                }
-                while (true) {
-                    print("계속 하시겠습니까? (y/n) : ")
-                    val yn = sc.next().toCharArray()[0]
-                    println("---------------------------------------")
-                    when (yn) {
-                        'y' -> {
-                            println("계산기를 계속합니다.")
-                            println("---------------------------------------")
-                            break
-                        }
-
-                        'n' -> {
-                            println("레벨 4 계산기를 종료합니다.")
-                            println("---------------------------------------")
-                            return
-                        }
-
-                        else -> {
-                            println("잘못된 입력입니다. 다시 입력해주세요")
-                            println("---------------------------------------")
-                            continue
-                        }
-                    }
-                }
-            } catch (e: Exception) {
-                println("숫자를 입력해주여야 합니다.")
-                println("입력 값이 잘못 되었으므로 계산기를 다시 실행합니다.")
-                println("---------------------------------------")
-                sc.nextLine()
-            }
-        }
-    }
+    return false
 }
