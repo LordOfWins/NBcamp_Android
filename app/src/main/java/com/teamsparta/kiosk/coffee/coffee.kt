@@ -137,7 +137,7 @@ fun selectedItemMenu(name: String, menuType: String) {
 }
 
 fun printOrder() {
-    if (com.teamsparta.kiosk.teaAde.Order.items.isEmpty()) {
+    if (Order.items.isEmpty()) {
         println("주문 내역이 없습니다.")
     } else {
         println("주문 내역:")
