@@ -124,9 +124,7 @@ fun printOrder() {
             println("  샷 추가 여부: ${item.shot}")
             println("  포장 여부: ${item.packaging}")
 
-            if (item.whippedCream != null) {
-                println("  휘핑 크림 추가 여부: ${item.whippedCream}")
-            }
+
         }
     }
 }
