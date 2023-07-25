@@ -1,5 +1,6 @@
 package com.teamsparta.kiosk.decafCoffee
 
+import com.teamsparta.kiosk.coffee.whippedCreamMenu
 import com.teamsparta.kiosk.error
 import com.teamsparta.kiosk.packagingMenu
 import com.teamsparta.kiosk.shotMenu
@@ -27,6 +28,8 @@ fun decafCoffeeMenu() {
         println("1. 아메리카노")
         println("2. 라떼")
         println("3. 카페모카")
+        println("4. 에스프레소")
+        println("5. 카푸치노")
         println("0. 뒤로가기")
 
         print("원하는 메뉴를 선택하세요: ")
@@ -35,6 +38,8 @@ fun decafCoffeeMenu() {
             "1" -> selectedItemMenu("디카페인 아메리카노", "디카페인 커피")
             "2" -> selectedItemMenu("디카페인 라떼", "디카페인 커피")
             "3" -> selectedItemMenu("디카페인 카페모카", "디카페인 커피")
+            "4" -> selectedItemMenu("디카페인 에스프레소", "디카페인 커피")
+            "5" -> selectedItemMenu("디카페인 카푸치노", "디카페인 커피")
             "0" -> break
             else -> error()
         }
@@ -46,7 +51,7 @@ fun selectedItemMenu(name: String, menuType: String) {
     var size: String? = null
     var shot: String? = null
     var packaging: String? = null
-    var whippedCream: String? = null
+    val whippedCream: String? = null
     while (true) {
         println("1. 온도 선택")
         println("2. 사이즈 선택")
@@ -69,8 +74,7 @@ fun selectedItemMenu(name: String, menuType: String) {
 
             "6" -> {
                 if (temperature != null && size != null && shot != null && packaging != null) {
-                    whippedCream =
-                        if (name == "카라멜 마끼아또" && whippedCream == null) "휘핑 크림 없음" else whippedCream
+
                     val menuItem = MenuItem(
                         menuType = type,
                         name = name,
@@ -79,7 +83,7 @@ fun selectedItemMenu(name: String, menuType: String) {
                         shot = shot,
                         packaging = packaging,
                         whippedCream = whippedCream,
-                    color = null
+                        color = null
                     )
                     Order.items.add(menuItem)
                     printOrder()

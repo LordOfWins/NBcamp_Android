@@ -1,5 +1,6 @@
 package com.teamsparta.kiosk.dessert
 
+import com.teamsparta.kiosk.coffee.whippedCreamMenu
 import com.teamsparta.kiosk.packagingMenu
 import com.teamsparta.kiosk.shotMenu
 import com.teamsparta.kiosk.sizeMenu
