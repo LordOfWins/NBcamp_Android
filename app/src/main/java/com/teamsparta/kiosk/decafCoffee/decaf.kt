@@ -5,7 +5,7 @@ import com.teamsparta.kiosk.packagingMenu
 import com.teamsparta.kiosk.shotMenu
 import com.teamsparta.kiosk.sizeMenu
 import com.teamsparta.kiosk.temperatureMenu
-import com.teamsparta.kiosk.whippedCreamMenu
+
 
 data class MenuItem(
     val menuType: String,
@@ -65,13 +65,7 @@ fun selectedItemMenu(name: String, menuType: String) {
             "2" -> size = sizeMenu()
             "3" -> shot = shotMenu()
             "4" -> packaging = packagingMenu()
-            "5" -> {
-                if (name == "카라멜 마끼아또") {
-                    whippedCream = whippedCreamMenu()
-                } else {
-                    println("해당 메뉴에는 휘핑 크림 옵션이 없습니다.")
-                }
-            }
+
 
             "6" -> {
                 if (temperature != null && size != null && shot != null && packaging != null) {
@@ -126,9 +120,7 @@ fun printOrder() {
             println("  샷 추가 여부: ${item.shot}")
             println("  포장 여부: ${item.packaging}")
 
-            if (item.whippedCream != null) {
-                println("  휘핑 크림 추가 여부: ${item.whippedCream}")
-            }
+
         }
     }
 }
