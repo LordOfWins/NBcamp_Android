@@ -6,6 +6,7 @@ import com.teamsparta.kiosk.coffee.User
 import com.teamsparta.kiosk.decafCoffee.decafCoffeeMenu
 import com.teamsparta.kiosk.dessert.dessertMenu
 import com.teamsparta.kiosk.merchandise.merchandiseMenu
+//import com.teamsparta.kiosk.merchandise.merchandiseMenu
 import com.teamsparta.kiosk.teaAde.teaAdeMenu
 import java.time.LocalDateTime
 import java.time.LocalTime
