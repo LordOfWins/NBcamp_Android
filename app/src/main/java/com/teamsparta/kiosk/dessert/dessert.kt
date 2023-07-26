@@ -1,11 +1,5 @@
 package com.teamsparta.kiosk.dessert
 
-import com.teamsparta.kiosk.coffee.whippedCreamMenu
-import com.teamsparta.kiosk.packagingMenu
-import com.teamsparta.kiosk.shotMenu
-import com.teamsparta.kiosk.sizeMenu
-import com.teamsparta.kiosk.temperatureMenu
-
 
 object Order {
     val items = mutableListOf<MenuItem>()
@@ -287,7 +281,7 @@ fun packagingMenu(name: String, type: String,packaging: String) {
     }
 }
 
-fun desertPrintOrder() {
+fun desertPrintOrder() { //6번을 누르면 출력이 안됨
     if (Order.items.isEmpty()) {
         println("주문 내역이 없습니다.")
     } else {
