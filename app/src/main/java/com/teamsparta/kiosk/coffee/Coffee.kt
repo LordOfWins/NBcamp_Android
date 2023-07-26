@@ -1,42 +1,60 @@
 package com.teamsparta.kiosk.coffee
 
-abstract class Coffee(
-    val name: String,
-    val size: String,
-    val temperature: String?,
-    val shot: String?,
-    val packaging: String?,
-    val whippedCream: String?,
-)
+import com.teamsparta.kiosk.Item
+
+open class Coffee(override var name: String?, override var price: Int?) : Item {
+    var size: String? = null
+    var temperature: String? = null
+    var shot: String? = null
+    var packaging: String? = null
+    var whippedCream: String? = null
+
+    constructor(
+        name: String?,
+        price: Int?,
+        size: String?,
+        temperature: String?,
+        shot: String?,
+        packaging: String?,
+        whippedCream: String?
+    ) : this(name, price) {
+        this.size = size
+        this.temperature = temperature
+        this.shot = shot
+        this.packaging = packaging
+        this.whippedCream = whippedCream
+    }
+}
+
 
 class Americano(
-    size: String, temperature: String?, shot: String?, packaging: String?, whippedCream: String?
-) : Coffee("아메리카노", size, temperature, shot, packaging, whippedCream)
+    size: String?, temperature: String?, shot: String?, packaging: String?, whippedCream: String?
+) : Coffee("아메리카노", 1500, size, temperature, shot, packaging, whippedCream)
+
 
 class CaramelMacchiato(
-    size: String, temperature: String?, shot: String?, packaging: String?, whippedCream: String?
-) : Coffee("카라멜 마끼아또", size, temperature, shot, packaging, whippedCream)
+    size: String?, temperature: String?, shot: String?, packaging: String?, whippedCream: String?
+) : Coffee("카라멜 마끼아또", 2500, size, temperature, shot, packaging, whippedCream)
 
 class CafeLatte(
     size: String, temperature: String?, shot: String?, packaging: String?, whippedCream: String?
-) : Coffee("카페라떼", size, temperature, shot, packaging, whippedCream)
+) : Coffee("카페라떼", 3000, size, temperature, shot, packaging, whippedCream)
 
 class Capuchiino(
     size: String, temperature: String?, shot: String?, packaging: String?, whippedCream: String?
-) : Coffee("카푸치노", size, temperature, shot, packaging, whippedCream)
+) : Coffee("카푸치노", 1500, size, temperature, shot, packaging, whippedCream)
 
 class Espresso(
     size: String, temperature: String?, shot: String?, packaging: String?, whippedCream: String?
-) : Coffee("에스프레소", size, temperature, shot, packaging, whippedCream)
+) : Coffee("에스프레소", 1500, size, temperature, shot, packaging, whippedCream)
 
 class ColdBrew(
     size: String, temperature: String?, shot: String?, packaging: String?, whippedCream: String?
-) : Coffee("콜드브루", size, temperature, shot, packaging, whippedCream)
+) : Coffee("콜드브루", 2500, size, temperature, shot, packaging, whippedCream)
 
 class ColdBrewLatte(
     size: String, temperature: String?, shot: String?, packaging: String?, whippedCream: String?
-) : Coffee("콜드브루 라떼", size, temperature, shot, packaging, whippedCream)
-
+) : Coffee("콜드브루 라떼", 3000, size, temperature, shot, packaging, whippedCream)
 
 
 fun selectedItemMenu(user: User, selectedCoffee: Coffee) {
