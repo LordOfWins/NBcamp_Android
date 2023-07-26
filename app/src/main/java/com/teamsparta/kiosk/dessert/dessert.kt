@@ -281,7 +281,7 @@ fun packagingMenu(name: String, type: String,packaging: String) {
     }
 }
 
-fun desertPrintOrder() { //6번을 누르면 출력이 안됨
+fun desertPrintOrder() {
     if (Order.items.isEmpty()) {
         println("주문 내역이 없습니다.")
     } else {
