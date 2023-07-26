@@ -1,13 +1,14 @@
 package com.teamsparta.kiosk
 
+//import com.teamsparta.kiosk.merchandise.merchandiseMenu
 import coffeeMenu
 import com.teamsparta.kiosk.coffee.Order
 import com.teamsparta.kiosk.coffee.User
-import com.teamsparta.kiosk.decafCoffee.decafCoffeeMenu
 import com.teamsparta.kiosk.dessert.dessertMenu
 import com.teamsparta.kiosk.merchandise.merchandiseMenu
 //import com.teamsparta.kiosk.merchandise.merchandiseMenu
 import com.teamsparta.kiosk.teaAde.teaAdeMenu
+import decafCoffeeMenu
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -249,7 +250,7 @@ fun menu(user: User) {
             2 -> teaAdeMenu()
             3 -> dessertMenu()
             4 -> merchandiseMenu()
-            5 -> decafCoffeeMenu()
+            5 -> decafCoffeeMenu(user)
             6 -> confirmAndPayOrder(user)
             7 -> cancelOrder(user)
             0 -> {
@@ -452,5 +453,3 @@ fun cancelOrder(user: User) { // 주문을 취소하는 함수
         cancelOrder(user)
     }
 }
-
-
