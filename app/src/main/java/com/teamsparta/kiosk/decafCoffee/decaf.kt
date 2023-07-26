@@ -33,3 +33,4 @@ class Capuchiino(
     size: String, temperature: String?, shot: String?, packaging: String?, whippedCream: String?
 ) : Decaf("카푸치노", size, temperature, shot, packaging, whippedCream)
 
+

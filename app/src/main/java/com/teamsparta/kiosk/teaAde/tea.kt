@@ -23,8 +23,7 @@ fun teaAdeMenu() {
         println("2. 에이드")
         println("3. 차")
         println("0. 뒤로가기")
-
-        print("원하는 메뉴를 선택하세요: ")
+        print("원하는 항목을 선택하세요: ")
 
         when (readLine()!!) {
             "1" -> icedTeaMenu()
@@ -96,7 +95,6 @@ fun adeMenu(name: String, menuType: String) {
         println("4. 포장 여부")
         println("6. 주문 완료")
         println("0. 뒤로가기")
-
         print("원하는 항목을 선택하세요: ")
 
         when (readLine()!!) {
@@ -105,19 +103,32 @@ fun adeMenu(name: String, menuType: String) {
             "3" -> shot = shotMenu()
             "4" -> packaging = packagingMenu()
             "6" -> {
-                if (size != null && shot != null && packaging != null) {
-                    val menuItem = MenuItem(
-                        menuType = type,
-                        name = name,
-                        size = size,
-                        packaging = packaging,
-                    )
-                    Order.items.add(menuItem)
-                    printOrder()
-                    return
-                } else {
-                    println("모든 타입을 선택해주세요.")
+                // 사이즈 체크
+                if (size == null) {
+                    println("사이즈를 다시 선택해주세요.")
+                    continue
                 }
+                // 샷추가 체크
+                if (shot == null) {
+                    println("샷 추가를 다시 선택해주세요.")
+                    continue
+                }
+                // 포장 체크
+                if (packaging == null) {
+                    println("포장 여부를 다시 선택해주세요.")
+                    continue
+                }
+                // 모든 변수가 선택되었을 때 실행되는 부분
+                val menuItem = MenuItem(
+                    menuType = type,
+                    name = name,
+                    size = size,
+                    packaging = packaging,
+                )
+                Order.items.add(menuItem)
+                printOrder()
+                teaAdeMenu()
+                break
             }
             "0" -> break
             else -> com.teamsparta.kiosk.error()
@@ -146,20 +157,34 @@ fun teaMenu(name: String, menuType: String) {
             "3" -> println("차 음료에는 샷 추가를 할 수 없습니다")
             "4" -> packaging = packagingMenu()
             "6" -> {
-                if (temperature != null && size != null && packaging != null) {
-                    val menuItem = MenuItem(
-                        menuType = type,
-                        name = name,
-                        size = size,
-                        packaging = packaging,
-                    )
-                    Order.items.add(menuItem)
-                    printOrder()
-                    return
-                } else {
-                    println("모든 타입을 다시 선택해주세요.")
-                } // if문을 온도 체크, 사이즈 체크, 포장 체크로 분리
+                // 온도 체크
+                if (temperature == null) {
+                    println("온도를 다시 선택해주세요.")
+                    continue
+                }
+                // 사이즈 체크
+                if (size == null) {
+                    println("사이즈를 다시 선택해주세요.")
+                    continue
+                }
+                // 포장 체크
+                if (packaging == null) {
+                    println("포장 여부를 다시 선택해주세요.")
+                    continue
+                }
+                // 모든 변수가 선택되었을 때 실행되는 부분
+                val menuItem = MenuItem(
+                    menuType = type,
+                    name = name,
+                    size = size,
+                    packaging = packaging,
+                )
+                Order.items.add(menuItem)
+                printOrder()
+                teaAdeMenu()
+                break
             }
+
             "0" -> break
             else -> com.teamsparta.kiosk.error()
         }
