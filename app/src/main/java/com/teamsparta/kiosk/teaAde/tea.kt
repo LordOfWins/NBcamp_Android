@@ -1,5 +1,6 @@
 package com.teamsparta.kiosk.teaAde
 
+import com.teamsparta.kiosk.menu
 import com.teamsparta.kiosk.packagingMenu
 import com.teamsparta.kiosk.shotMenu
 import com.teamsparta.kiosk.sizeMenu
