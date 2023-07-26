@@ -1,7 +1,5 @@
 package com.teamsparta.kiosk.coffee
 
-import com.teamsparta.kiosk.error
-
 abstract class Coffee(
     val name: String,
     val size: String,
@@ -40,26 +38,6 @@ class ColdBrewLatte(
 ) : Coffee("콜드브루 라떼", size, temperature, shot, packaging, whippedCream)
 
 
-fun whippedCreamMenu(): String {
-    println("휘핑크림 추가 여부를 선택하세요")
-    println("1. 휘핑 추가")
-    println("2. 기본")
-    println("0. 뒤로가기")
-    print("원하시는 휘핑크림 옵션을 선택해주세요: ")
-    return when (readLine()?.toIntOrNull()) {
-        1 -> "휘핑추가"
-        2 -> "기본"
-        0 -> {
-            println("뒤로 돌아갑니다.")
-            ""
-        }
-
-        else -> {
-            error()
-            ""
-        }
-    }
-}
 
 fun selectedItemMenu(user: User, selectedCoffee: Coffee) {
     var temperature: String? = null
