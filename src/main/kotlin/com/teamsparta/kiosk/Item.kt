@@ -1,6 +1,3 @@
 package com.teamsparta.kiosk
 
-interface Item {
-    var name: String?
-    var price: Int?
-}
+open class Item(var name: String, var price: Int, open val quantity: Int = 1)

@@ -1,17 +1,14 @@
 package com.teamsparta.kiosk
 
-import com.teamsparta.kiosk.coffee.OrderItem
 
-
-class User
-{
-    var balance: Int = 0
+class User {
+    var balance: Long = 0
     fun inputBalance() {
         print("금액을 입력하세요: ")
-        balance = readLine()!!.toInt()
+        val input = readln()
+        balance = input.toLongOrNull() ?: run {
+            inputBalance()
+            0
+        }
     }
-}
-
-fun canPurchase(user: User, orderItem: OrderItem): Boolean {
-    return user.balance >= orderItem.price
 }
