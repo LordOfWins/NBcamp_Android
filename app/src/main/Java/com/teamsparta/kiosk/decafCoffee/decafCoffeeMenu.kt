@@ -17,12 +17,13 @@ fun decafCoffeeMenu() {
         println("----------------------------------")
         println("커피 메뉴")
         println("1. 디카페인 아메리카노          | 2,300원 |       ")
-        println("2. 디카페인 카페라떼            | 3,800원 |       ")
-        println("3. 디카페인 카라멜 마끼아또      | 3,000원 |       ")
-        println("4. 디카페인 카푸치노            | 4,000원 |       ")
+        println("2. 디카페인 카라멜 마끼아또      | 3,000원 |       ")
+        println("3. 디카페인 카페라떼            | 3,800원 |       ")
+        println("4. 디카페인 카페모카            | 3,200원 |       ")
         println("5. 디카페인 에스프레소          | 3,700원 |       ")
-        println("6. 디카페인 콜드브루            | 3,000원 |        ")
-        println("7. 디카페인 콜드브루 라떼        | 3,500원 |        ")
+        println("6. 디카페인 카푸치노            | 4,000원 |       ")
+        println("7. 디카페인 콜드브루            | 3,500원 |        ")
+        println("8. 디카페인 콜드브루 라떼        | 3,500원 |        ")
         println("0. 뒤로가기")
 
         print("원하시는 메뉴를 선택해주세요 : ")
@@ -81,6 +82,24 @@ fun decafCoffeeMenu() {
             6 -> {
                 decaffeineMenu(
                     DecaffeineCapuchiino(
+                        size = "", temperature = null, shot = null, packaging = null, whippedCream = null
+                    )
+                )
+                println("---------------추가 완료---------------")
+                break
+            }
+            7 -> {
+                decaffeineMenu(
+                    DecaffeineColdBrew(
+                        size = "", temperature = null, shot = null, packaging = null, whippedCream = null
+                    )
+                )
+                println("---------------추가 완료---------------")
+                break
+            }
+            8 -> {
+                decaffeineMenu(
+                    DecaffeineColdBrewLatte(
                         size = "", temperature = null, shot = null, packaging = null, whippedCream = null
                     )
                 )
