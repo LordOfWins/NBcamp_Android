@@ -1,8 +1,8 @@
 package com.teamsparta.kiosk.decafCoffee
 
 class DecaffeineColdBrew(
-    name: String = "콜드브루",
-    price: Int = 3000,
+    name: String = "디카페인 콜드브루",
+    price: Int = 3500,
     override var size: String?,
     override var temperature: String?,
     override var shot: String?,
