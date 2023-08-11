@@ -13,6 +13,8 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.startActivity
+import androidx.core.content.res.TypedArrayUtils.getString
 
 class SignInActivity : AppCompatActivity() {
 
@@ -54,18 +56,19 @@ class SignInActivity : AppCompatActivity() {
                 this, getString(R.string.id_password_msg)
             )
         } else {
-            val id = intent.getStringExtra("id").toString()
-            val password = intent.getStringExtra("password").toString()
-            val name = intent.getStringExtra("name").toString()
-            user = User(id, password, name)
-            val array = mutableListOf(user)
-            array.add(user)
-            if (userId == user.id && userPassword == user.password) {
+//            val id = intent.getStringExtra("id").toString()
+//            val password = intent.getStringExtra("password").toString()
+//            val name = intent.getStringExtra("name").toString()
+//            user = User(id, password, name)
+//            val array = mutableListOf(user)
+//            array.add(user)
+//            if (userId == user.id && userPassword == user.password) {
                 showToast(this, "로그인 성공")
                 val intent = Intent(this, HomeActivity::class.java)
                 intent.putExtra("id", userId) //id라는 key값을 넘긴다.
                 startActivity(intent)
-            } else {
+//            }
+        else {
                 showToast(this, "로그인 실패")
             }
         }
