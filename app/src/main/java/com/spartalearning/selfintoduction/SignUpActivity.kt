@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 
@@ -19,22 +18,28 @@ class SignUpActivity : AppCompatActivity() {
         signUpName = findViewById(R.id.signUpName)
         signUpId = findViewById(R.id.signUpId)
         signUpPassword = findViewById(R.id.signUpPassword)
-        signIn(view = View(this))
+        signUp(view = View(this))
     }
 
 
-    fun signIn(view: View) {
-        if (signUpName.text.isNotEmpty() && signUpId.text.isNotEmpty() && signUpPassword.text.isNotEmpty()) {
-            val intent = Intent(this, SignInActivity::class.java).apply {
-                putExtra("id", signUpId.text.toString())
-                putExtra("password", signUpPassword.text.toString())
+    fun signUp(view: View) {
+        if (view.id == R.id.button) {
+
+            if (signUpName.text.isNotEmpty() && signUpId.text.isNotEmpty() && signUpPassword.text.isNotEmpty()) {
+                val intent = Intent(this, SignInActivity::class.java).apply {
+                    putExtra("id", signUpId.text.toString())
+                    putExtra("password", signUpPassword.text.toString())
+                    putExtra("name", signUpName.text.toString())
+                }
+
+                setResult(RESULT_OK, intent)
+                if (!isFinishing) {
+                    finish()
+                }
+            } else {
+                val signIn = SignInActivity()
+                signIn.showToast(this, getString(R.string.id_password_msg))
             }
-            setResult(RESULT_OK, intent)
-            if (!isFinishing) {
-                finish()
-            }
-        } else {
-            Toast.makeText(this, getString(R.string.id_password_msg), Toast.LENGTH_SHORT).show()
         }
     }
 }
