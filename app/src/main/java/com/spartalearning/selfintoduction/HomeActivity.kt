@@ -15,12 +15,15 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
         terminate = findViewById<Button>(R.id.terminate)
 
-        var id = findViewById<TextView>(R.id.myId).text
-
+        val id = findViewById<TextView>(R.id.myId)
+        val name= findViewById<TextView>(R.id.myName)
+        val age=findViewById<TextView>(R.id.myAge)
+        val mbti = findViewById<TextView>(R.id.myMbti)
 
         if (intent.hasExtra("id")) {
-            id = "아이디 : " + intent.getStringExtra("id")
+            id.text = "아이디 : " + intent.getStringExtra("id")
         }
+        mbti.text = "MBTI : " + generateRandomMBTI()
 
 
         val photo = findViewById<ImageView>(R.id.profile)
@@ -41,4 +44,17 @@ class HomeActivity : AppCompatActivity() {
     fun end(view: View) {
         finish()
     }
-}
+
+    fun generateRandomMBTI(): String {
+        val firstLetterList = listOf("I", "E")
+        val secondLetterList = listOf("S", "N")
+        val thirdLetterList = listOf("T", "F")
+        val fourthLetterList = listOf("P", "J")
+
+        val firstLetter = firstLetterList.random()
+        val secondLetter = secondLetterList.random()
+        val thirdLetter = thirdLetterList.random()
+        val fourthLetter = fourthLetterList.random()
+
+        return "$firstLetter$secondLetter$thirdLetter$fourthLetter"
+    } }
