@@ -10,31 +10,30 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.example.android_supporters_sns_project.dataclass.Member
 
 class PersonalPageActivity : AppCompatActivity() {
-
+    
     private lateinit var backButton: ImageButton
     private lateinit var moveToEditButton: ImageView
     private lateinit var logoutButton: ImageButton
-    private lateinit var editStateButton : ImageButton
-
-    private lateinit var stateMessage : TextView
+    private lateinit var editStateButton: ImageButton
+    
+    private lateinit var stateMessage: TextView
 
 //    private lateinit var btnDetailContent1: ImageButton
 //    private lateinit var btnDetailContent2: ImageButton
 //    private lateinit var btnDetailContent3: ImageButton
-
+    
     private lateinit var profilePicture: ImageView
     private lateinit var profileName: TextView
-
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_personal_page)
-
+        
         val emailData: String? = intent.getStringExtra("email")
-        val member : Member? = emailData?.let { MemberManager.getMemberByEmail(it) }
-
+        emailData?.let { MemberManager.getMemberByEmail(it) }
+        
         backButton = findViewById(R.id.personalPage_backSpace_imageButton)
         moveToEditButton = findViewById(R.id.personalPage_profileEdit_imageView)
         logoutButton = findViewById(R.id.personalPage_logout_button)
@@ -42,10 +41,10 @@ class PersonalPageActivity : AppCompatActivity() {
 //        btnDetailContent1 = findViewById(R.id.personalPage_examPic1_imageButton)
 //        btnDetailContent2 = findViewById(R.id.personalPage_examPic2_imageButton)
 //        btnDetailContent3 = findViewById(R.id.personalPage_examPic3_imageButton)
-
+        
         profilePicture = findViewById(R.id.personalPage_profile_imageView)
         profileName = findViewById(R.id.personalPage_ID_textView)
-
+        
         stateMessage = findViewById(R.id.personalPage_state_textView)
         editStateButton = findViewById(R.id.personalPage_editState_imageButton)
 
@@ -67,29 +66,29 @@ class PersonalPageActivity : AppCompatActivity() {
 //            startActivity(intent)
 //            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
 //        }
-
+        
         moveToEditButton.setOnClickListener {
             val intent = Intent(this, ModifyInfoActivity::class.java)
             intent.putExtra("email", emailData)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
-
+        
         backButton.setOnClickListener {
             finish()
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
         }
-
+        
         editStateButton.setOnClickListener {
             editStateDialog(stateMessage, emailData)
         }
-
-
+        
+        
         profileName.text = emailData?.let { MemberManager.getMemberByEmail(it)?.name }
         stateMessage.text = emailData?.let { MemberManager.getMemberByEmail(it)?.stateMessage }
-
+        
         logoutButton.setOnClickListener {
-            //로그아웃 버튼을 누르면 로그아웃 여부를 묻는 AlertDialog가 뜸.
+            // 로그아웃 버튼을 누르면 로그아웃 여부를 묻는 AlertDialog가 뜸.
             AlertDialog.Builder(this).setTitle("로그아웃").setMessage("로그아웃 하시겠습니까?")
                 .setPositiveButton("확인") { _, _ ->
                     // 프로그레스 바를 나타내는 AlertDialog 생성
@@ -99,11 +98,11 @@ class PersonalPageActivity : AppCompatActivity() {
                         setTitle("로그아웃 중입니다.")
                     }.create()
                     progressDialog.show()
-
+                    
                     // 비동기 작업을 수행하는 동안 프로그레스바가 표시됩니다(2초 대기)
                     Handler(Looper.getMainLooper()).postDelayed({
                         progressDialog.dismiss()
-                        //확인을 누르면 로그인 화면으로 이동
+                        // 확인을 누르면 로그인 화면으로 이동
                         AlertDialog.Builder(this).setTitle("로그아웃").setMessage("로그아웃 되었습니다.")
                             .setPositiveButton("확인") { _, _ ->
                                 val intent = Intent(this, LoginActivity::class.java)
@@ -113,23 +112,24 @@ class PersonalPageActivity : AppCompatActivity() {
                                 )
                             }.show()
                     }, 1500)
-
+                    
                 }.setNegativeButton("취소") { _, _ -> }.show()
         }
     }
+    
     private fun editStateDialog(stateMessage: TextView, emailData: String?) {
         val builder = AlertDialog.Builder(this)
         val inflater = layoutInflater
         val dialogView = inflater.inflate(R.layout.alertdialog_personal, null)
         val editText = dialogView.findViewById<EditText>(R.id.alertDialog_state_editText)
-
+        
         builder.setView(dialogView)
-            .setPositiveButton("확인") { dialog, which ->
+            .setPositiveButton("확인") { _, _ ->
                 val inputText = editText.text.toString()
                 MemberManager.updateStateMessage(emailData, inputText)
-                stateMessage.setText(inputText)
+                stateMessage.text = inputText
             }
-            .setNegativeButton("취소") { dialog, which ->
+            .setNegativeButton("취소") { _, _ ->
             }
             .show()
     }
