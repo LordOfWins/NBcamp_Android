@@ -7,9 +7,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import android.view.View.OnTouchListener
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
@@ -26,134 +26,134 @@ import java.util.regex.Pattern
 
 
 class SignupActivity : AppCompatActivity() {
-
+    
     var imageDataTemp: Uri? = null
     var stateMessageTemp: String = "상태 메세지"
-
-    //각 Edittext 입력 여부에 따라 바뀌는 변수
+    
+    // 각 Edittext 입력 여부에 따라 바뀌는 변수
     private var checkEmail = false
     private var checkPassword = false
     var checkPasswordCheck = false
     var checkName = false
     var checkNickname = false
-
-    //Widget(email)
+    
+    // Widget(email)
     private lateinit var emailEditText: EditText
     private lateinit var emailRepetitionButton: Button
     private lateinit var emailWarningText: TextView
     private lateinit var emailConfirmCheck: ImageView
-
-    //Widget(password)
+    
+    // Widget(password)
     private lateinit var passwordEditText: EditText
     private lateinit var passwordWarningText: TextView
     private lateinit var passwordConfirmCheck: ImageView
-
-    //Widget(passwordcheck)
+    
+    // Widget(passwordcheck)
     private lateinit var passwordCheckEditText: EditText
     private lateinit var passwordCheckWarningText: TextView
     private lateinit var passwordCheckConfirmCheck: ImageView
-
-    //Widget(name)
+    
+    // Widget(name)
     private lateinit var nameEditText: EditText
     private lateinit var nameWarningText: TextView
     private lateinit var nameConfirmCheck: ImageView
-
-    //Widget(nickname)
+    
+    // Widget(nickname)
     private lateinit var nicknameEditText: EditText
     private lateinit var nicknameRepetitionButton: Button
     private lateinit var nicknameWarningText: TextView
     private lateinit var nicknameConfirmCheck: ImageView
-
+    
     private lateinit var addPictureImage: ImageView
-
+    
     private lateinit var backButton: ImageView
-
+    
     private lateinit var confirmButton: Button
-
-
-    //정규식
+    
+    
+    // 정규식
     private val email =
         "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
-
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
-
+        
         emailEditText = findViewById(R.id.signup_email_edittext)
         emailRepetitionButton = findViewById(R.id.signup_emailrepetition_button)
         emailWarningText = findViewById(R.id.signup_emailwarning_textview)
         emailConfirmCheck = findViewById(R.id.signup_confirmemail_imageview)
-
+        
         passwordEditText = findViewById(R.id.signup_password_edittext)
         passwordWarningText = findViewById(R.id.signup_passwordwarning_textview)
         passwordConfirmCheck = findViewById(R.id.signup_confirmpassword_imageview)
-
+        
         passwordCheckEditText = findViewById(R.id.signup_passwordcheck_edittext)
         passwordCheckWarningText = findViewById(R.id.signup_passwordcheckwarning_textview)
         passwordCheckConfirmCheck = findViewById(R.id.signup_confirmpasswordcheck_imageview)
-
+        
         nameEditText = findViewById(R.id.signup_name_edittext)
         nameWarningText = findViewById(R.id.signup_namewarning_textview)
         nameConfirmCheck = findViewById(R.id.signup_confirmname_imageview)
-
+        
         nicknameEditText = findViewById(R.id.signup_nickname_edittext)
         nicknameRepetitionButton = findViewById(R.id.signup_nicknamerepetition_button)
         nicknameWarningText = findViewById(R.id.signup_nicknamewarning_textview)
         nicknameConfirmCheck = findViewById(R.id.signup_confirmnickname_imageview)
-
+        
         addPictureImage = findViewById(R.id.signup_addpicture_imageview)
-
+        
         confirmButton = findViewById(R.id.signup_confirm_button)
-
+        
         backButton = findViewById(R.id.signup_backspace_imageview)
-
-        //Email edittext, button에 리스너 부착
+        
+        // Email edittext, button에 리스너 부착
         emailEditText.addTextChangedListener(signupTextWatcher)
         passwordEditText.addTextChangedListener(signupTextWatcher)
         passwordCheckEditText.addTextChangedListener(signupTextWatcher)
         nameEditText.addTextChangedListener(signupNameTextWatcher)
         nicknameEditText.addTextChangedListener(signupNickNameTextWatcher)
-
+        
         emailRepetitionButton.setOnClickListener {
             emailConfirmCheck.visibility = View.VISIBLE
             checkEmail = true
             enableConfirmButton()
         }
-
+        
         nicknameRepetitionButton.setOnClickListener {
             nicknameConfirmCheck.visibility = View.VISIBLE
             checkNickname = true
             enableConfirmButton()
         }
-
+        
         backButton.setOnClickListener {
             finish()
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
         }
-
-        //사진을 선택한 경우
+        
+        // 사진을 선택한 경우
         addPictureImage.setOnClickListener {
             when {
-                //갤러리 접근 권한이 있는 경우
+                // 갤러리 접근 권한이 있는 경우
                 ContextCompat.checkSelfPermission(
                     this,
                     android.Manifest.permission.READ_EXTERNAL_STORAGE
                 ) == PackageManager.PERMISSION_GRANTED -> {
                     navigateGallery()
                 }
-
+                
                 shouldShowRequestPermissionRationale(android.Manifest.permission.READ_EXTERNAL_STORAGE)
                 -> {
                     showPermissionContextPopup()
                 }
-                //갤러리 접근 권한 설정
+                // 갤러리 접근 권한 설정
                 else -> requestPermissions(
                     arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),
                     1000
                 )
             }
         }
-
+        
         confirmButton.setOnClickListener {
             createInstance()
             val intent = Intent(this, LoginActivity::class.java).apply {
@@ -164,19 +164,19 @@ class SignupActivity : AppCompatActivity() {
             if (!isFinishing) finish()
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
         }
-
+        
     }
-
-    //Text Watcher
+    
+    // Text Watcher
     private val signupTextWatcher = object : TextWatcher {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
+            Log.d("SignupActivity", "beforeTextChanged: $p0")
         }
-
+        
         override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
+            Log.d("SignupActivity", "onTextChanged: $p0")
         }
-
+        
         override fun afterTextChanged(p0: Editable?) {
             if (emailEditText.text.isNotEmpty()) {
                 emailCheck()
@@ -192,42 +192,41 @@ class SignupActivity : AppCompatActivity() {
             }
         }
     }
-
-    //Name Text Watcher
+    
+    // Name Text Watcher
     private val signupNameTextWatcher = object : TextWatcher {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
+            Log.d("SignupActivity", "beforeTextChanged: $p0")
         }
-
+        
         override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
+            Log.d("SignupActivity", "onTextChanged: $p0")
         }
-
+        
         override fun afterTextChanged(p0: Editable?) {
             nameCheck()
             enableConfirmButton()
         }
-
     }
-
-    //Nickname Text Watcher
+    
+    // Nickname Text Watcher
     private val signupNickNameTextWatcher = object : TextWatcher {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
+            Log.d("SignupActivity", "beforeTextChanged: $p0")
         }
-
+        
         override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
+            Log.d("SignupActivity", "onTextChanged: $p0")
         }
-
+        
         override fun afterTextChanged(p0: Editable?) {
             nicknameCheck()
             enableConfirmButton()
         }
-
+        
     }
-
-    //이메일 edittext를 확인하고 widget을 변경
+    
+    // 이메일 edittext를 확인하고 widget을 변경
     private fun emailCheck() {
         val emailText = emailEditText.text.toString().trim()
         val emailCheck = Pattern.matches(email, emailText)
@@ -241,12 +240,13 @@ class SignupActivity : AppCompatActivity() {
             checkEmail = false
         }
     }
-
-    //비밀번호 edittext를 확인하고 widget을 변경
+    
+    // 비밀번호 edittext를 확인하고 widget을 변경
     private fun passwordCheck() {
         val passwordText = passwordEditText.text.toString().trim()
-        val passwordCheck = !passwordText.contains(" ") && passwordText.matches("^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z0-9]{8,16}\$".toRegex())
-
+        val passwordCheck =
+            !passwordText.contains(" ") && passwordText.matches("^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z0-9]{8,16}\$".toRegex())
+        
         if (passwordCheck) {
             passwordWarningText.visibility = View.INVISIBLE
             passwordConfirmCheck.visibility = View.VISIBLE
@@ -257,12 +257,12 @@ class SignupActivity : AppCompatActivity() {
             checkPassword = false
         }
     }
-
-    //비밀번호 확인 edittext를 확인하고 widget을 변경
+    
+    // 비밀번호 확인 edittext를 확인하고 widget을 변경
     private fun checkPasswordCheck() {
         val checkPasswordText = passwordCheckEditText.text.toString().trim()
         val passwordText = passwordEditText.text.toString().trim()
-
+        
         if (checkPasswordText == passwordText) {
             passwordCheckWarningText.visibility = View.INVISIBLE
             passwordCheckConfirmCheck.visibility = View.VISIBLE
@@ -273,11 +273,11 @@ class SignupActivity : AppCompatActivity() {
             checkPasswordCheck = false
         }
     }
-
-    //이름 edittext를 확인하고 widget을 변경
+    
+    // 이름 edittext를 확인하고 widget을 변경
     private fun nameCheck() {
         val nameText = nameEditText.text.toString().trim()
-
+        
         if (nameText.isNotEmpty()) {
             nameWarningText.visibility = View.INVISIBLE
             nameConfirmCheck.visibility = View.VISIBLE
@@ -288,12 +288,12 @@ class SignupActivity : AppCompatActivity() {
             checkName = false
         }
     }
-
-    //닉네임 edittext를 확인하고 widget을 변경
-
+    
+    // 닉네임 edittext를 확인하고 widget을 변경
+    
     private fun nicknameCheck() {
         val nicknameText = nicknameEditText.text.toString().trim()
-
+        
         if (nicknameText.length in 1..15) {
             nicknameWarningText.visibility = View.INVISIBLE
             nicknameRepetitionButton.isEnabled = true
@@ -304,12 +304,12 @@ class SignupActivity : AppCompatActivity() {
             checkNickname = false
         }
     }
-
+    
     private fun enableConfirmButton() {
         confirmButton.isEnabled =
             checkEmail && checkPassword && checkPasswordCheck && checkNickname && checkName
     }
-
+    
     private fun createInstance() {
         val member = Member(
             emailEditText.text.toString().trim(),
@@ -318,21 +318,21 @@ class SignupActivity : AppCompatActivity() {
             nicknameEditText.text.toString().trim(),
             imageDataTemp,
             stateMessageTemp
-
+        
         )
-
+        
         MemberManager.addMember(member) // 입력 받은 값을 추가
         MemberManager.printMembers() // memberList에 저장된 데이터 확인을 위한 Logcat 출력
     }
-
-    //갤러리에서 사진 선택
+    
+    // 갤러리에서 사진 선택
     private fun navigateGallery() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         pickImageActivityResult.launch(intent)
     }
-
-    //사진을 선택한 후
+    
+    // 사진을 선택한 후
     private val pickImageActivityResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -343,13 +343,17 @@ class SignupActivity : AppCompatActivity() {
                         addPictureImage.setImageURI(selectedImageUri)
                         imageDataTemp = selectedImageUri
                     } else {
-                        Toast.makeText(this, getString(R.string.modify_pictureFailed), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this,
+                            getString(R.string.modify_pictureFailed),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }
         }
-
-    //권한 설정 팝업
+    
+    // 권한 설정 팝업
     private fun showPermissionContextPopup() {
         AlertDialog.Builder(this)
             .setTitle(getString(R.string.modify_permissionRequired))
@@ -361,7 +365,7 @@ class SignupActivity : AppCompatActivity() {
             .create()
             .show()
     }
-
+    
     fun hideKeyboard() {
         val inputManager = this.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.hideSoftInputFromWindow(
@@ -369,7 +373,7 @@ class SignupActivity : AppCompatActivity() {
             InputMethodManager.HIDE_NOT_ALWAYS
         )
     }
-
+    
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         val imm: InputMethodManager =
             getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
